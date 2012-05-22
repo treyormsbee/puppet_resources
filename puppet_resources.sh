@@ -39,6 +39,8 @@ else
   exit 1
 fi
 
+echo -en "Puppet Managed Resources:\n\n"
+
 awk --posix '
   BEGIN {
     marker=1
