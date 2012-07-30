@@ -5,17 +5,16 @@
 
 #Check for puppet.conf
 PUPCONF="/etc/puppet/puppet.conf"
+PUPVAR="/var/lib/puppet"
 if [ -r $PUPCONF ]
 then
   if grep -q " *vardir[ =]" $PUPCONF
   then
     PUPVAR=$(grep " *vardir[ =]" $PUPCONF | awk -F= '{gsub(" ","",$0); print $NF}')
-  else
-    PUPVAR="/var/lib/puppet"
   fi
 fi
 
-PUPYAMLDIR="$PUPVAR/client_yaml/catalog/"
+PUPYAMLDIR="$PUPVAR/client_yaml/catalog"
 
 if [ -d $PUPYAMLDIR ]
 then
@@ -23,11 +22,11 @@ then
   then
     PUPYAML="$PUPYAMLDIR/$(hostname).yaml"
   else
-    numfiles="0$(ls -l $PUPYAMLDIR >/dev/null 2>&1| wc -l)"
+    numfiles="0$(ls -l $PUPYAMLDIR/*.yaml | wc -l)"
     if [ $numfiles -eq 1 ]
     then
       #whatever file is in this directory is the winner
-      $PUPYAML=$(ls -l $PUPYAMLDIR/*)
+      PUPYAML=$(ls $PUPYAMLDIR/*.yaml)
     else
       #There is more then one file... let's bail for now...
       echo "Unable to find location of client yaml file"
