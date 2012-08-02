@@ -106,10 +106,12 @@ awk --posix '
       }
     }
   } END {
-    printf "\033[31mFiles managed by puppet:\033[00m  \n"
+    sort = "/bin/sort -k2"
+    printf "\033[31mFiles managed by puppet:\033[00m  "
     for ( x = 1; x <= FILECNT; x++ )
-    {  printf "\033[35m%s\n\033[00m",FILES[x]
+    {  printf "\033[35m%s\n\033[00m",FILES[x] | sort
     }
+    close(sort)
     printf "\n"
     printf "\033[31mPackages managed by puppet:\033[00m  \n"
     for ( x = 1; x <= PACKAGECNT ; x++ )
