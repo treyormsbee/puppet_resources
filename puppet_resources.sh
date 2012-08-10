@@ -115,18 +115,21 @@ awk --posix '
     printf "\n"
     printf "\033[31mPackages managed by puppet:\033[00m  \n"
     for ( x = 1; x <= PACKAGECNT ; x++ )
-    {  printf "\033[35m%s\033[00m\n",PACKAGES[x]
+    {  printf "\033[35m%s\033[00m\n",PACKAGES[x] | sort
     }
+    close(sort)
     printf "\n"
     printf "\033[31mServices managed by puppet:\033[00m  \n"
     for ( x = 1; x <= SERVICECNT ; x++ )
-    {  printf "\033[35m%s\033[00m\n",SERVICE[x]
+    {  printf "\033[35m%s\033[00m\n",SERVICE[x] | sort
     }
+    close(sort)
     printf "\n"
     printf "\033[31mUsers managed by puppet:\033[00m  \n"
     for ( x = 1; x <= USERCNT ; x++ )
-    {  printf "\033[35m%s\033[00m\n",USER[x]
+    {  printf "\033[35m%s\033[00m\n",USER[x] | sort
     }
+    close(sort)
     printf "\n"
     printf "\033[31mGroups managed by puppet:\033[00m  \n"
     for ( x = 1; x <= GROUPCNT ; x++ )
